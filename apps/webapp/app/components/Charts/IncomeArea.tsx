@@ -74,7 +74,7 @@ export default function IncomeArea({ data }: IncomeAreaProps) {
           />
           <YAxis
             stroke="var(--color-text-muted)"
-            tickFormatter={(value) => `${Math.round(value / 10000)}万`}
+            tickFormatter={(value: number | string) => `${Math.round(Number(value) / 10000)}万`}
             width={72}
             tickLine={false}
             axisLine={false}
