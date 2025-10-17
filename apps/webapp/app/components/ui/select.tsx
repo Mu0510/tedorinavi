@@ -58,7 +58,7 @@ export const SelectItem = React.forwardRef<
     ref={ref}
     className={twMerge(
       clsx(
-        "relative flex cursor-pointer select-none items-center rounded-[var(--radius-md)] px-3 py-2 text-sm text-[var(--color-text-primary)] outline-none focus:bg-[var(--color-hover)] focus:text-[var(--color-text-primary)] data-[state=checked]:bg-[color-mix(in oklab,var(--color-primary-500) 12%,transparent)]"
+        "relative flex cursor-pointer select-none items-center rounded-[var(--radius-md)] px-3 py-2 text-sm text-[var(--color-text-primary)] outline-none focus:bg-[var(--color-hover)] focus:text-[var(--color-text-primary)] data-[state=checked]:bg-[color-mix(in_oklab,var(--color-primary-500)_12%,transparent)]"
       ),
       className
     )}

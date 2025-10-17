@@ -197,7 +197,7 @@ export default function IncomeForm({
         </div>
 
         {professional ? (
-          <div className="space-y-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[color-mix(in oklab,var(--color-panel) 88%,transparent)] p-5">
+          <div className="space-y-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-panel)_88%,transparent)] p-5">
             <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">
               プロモード（控除の詳細）
             </h3>

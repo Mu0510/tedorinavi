@@ -15,7 +15,7 @@ const toneIcon: Record<NonNullable<AlertProps["tone"]>, React.ReactNode> = {
 
 const toneClass: Record<NonNullable<AlertProps["tone"]>, string> = {
   warning: "alert",
-  info: "alert bg-[color-mix(in oklab,var(--cash-balance-light) 80%,var(--color-panel))] border-[var(--color-income)]"
+  info: "alert bg-[color-mix(in_oklab,var(--cash-balance-light)_80%,var(--color-panel))] border-[var(--color-income)]"
 };
 
 export function Alert({ className, tone = "warning", children, ...props }: AlertProps) {

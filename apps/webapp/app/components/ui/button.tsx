@@ -16,14 +16,14 @@ const variantClass: Record<ButtonVariants, string> = {
   primary: "btn-primary",
   outline: "btn-outline",
   ghost:
-    "btn-base bg-[color-mix(in oklab,var(--color-primary-500) 10%,transparent)] text-[var(--color-text-primary)]"
+    "btn-base bg-[color-mix(in_oklab,var(--color-primary-500)_10%,transparent)] text-[var(--color-text-primary)]"
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+    const Comp = (asChild ? Slot : "button") as React.ElementType;
     const merged = twMerge(clsx("btn-base", variantClass[variant], className));
-    return <Comp className={merged} ref={ref as any} {...props} />;
+    return <Comp className={merged} ref={ref} {...props} />;
   }
 );
 

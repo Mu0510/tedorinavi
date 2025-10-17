@@ -18,7 +18,7 @@ export default function NextWallMeter({
 }: NextWallMeterProps) {
   if (!next) {
     return (
-      <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[color-mix(in oklab,var(--color-panel) 85%,transparent)] p-6">
+      <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-panel)_85%,transparent)] p-6">
         <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">
           すべての壁を越えました
         </h3>

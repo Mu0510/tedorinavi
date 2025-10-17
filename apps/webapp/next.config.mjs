@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true,
     typedRoutes: true,
     scrollRestoration: true
   }

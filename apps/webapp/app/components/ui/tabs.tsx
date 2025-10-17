@@ -15,7 +15,7 @@ export const TabsList = React.forwardRef<
     ref={ref}
     className={twMerge(
       clsx(
-        "inline-flex items-center rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[color-mix(in oklab,var(--color-panel) 80%,transparent)] p-1 text-sm"
+        "inline-flex items-center rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-panel)_80%,transparent)] p-1 text-sm"
       ),
       className
     )}

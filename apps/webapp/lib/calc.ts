@@ -30,10 +30,16 @@ type WallDefinition = {
   label: string;
   threshold: number;
   modes?: Array<SimulationInput["mode"]>;
+  isRelevant?: (input: SimulationInput) => boolean;
 };
 
 const WALLS: WallDefinition[] = [
-  { id: "SOCIAL_106", label: "社保加入（特定適用）106万円", threshold: SOCIAL_106 },
+  {
+    id: "SOCIAL_106",
+    label: "社保加入（特定適用）106万円",
+    threshold: SOCIAL_106,
+    isRelevant: (input) => input.firmSize === ">=51" && input.weekly === ">=20"
+  },
   { id: "RESIDENT_110", label: "住民税（参考）110万円", threshold: RESIDENT_110 },
   { id: "TAX_FUYOU_123", label: "配偶者控除（住民税）123万円", threshold: TAX_FUYOU_123 },
   { id: "SOCIAL_130", label: "国民年金・健康保険 130万円", threshold: SOCIAL_130 },
@@ -51,6 +57,9 @@ function evaluateWalls(input: SimulationInput, annualIncome: number) {
 
   for (const wall of WALLS) {
     if (wall.modes && !wall.modes.includes(input.mode)) {
+      continue;
+    }
+    if (wall.isRelevant && !wall.isRelevant(input)) {
       continue;
     }
 

@@ -11,7 +11,7 @@ const toneClass: Record<NonNullable<BadgeProps["tone"]>, string> = {
   default: "badge",
   income: "badge-income",
   expense: "badge-expense",
-  muted: "badge bg-[color-mix(in oklab,var(--color-text-muted) 16%,transparent)] text-[var(--color-text-primary)]"
+  muted: "badge bg-[color-mix(in_oklab,var(--color-text-muted)_16%,transparent)] text-[var(--color-text-primary)]"
 };
 
 export function Badge({ className, tone = "default", ...props }: BadgeProps) {

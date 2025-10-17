@@ -3,25 +3,52 @@
   "compilerOptions": {
     "incremental": true,
     "jsx": "preserve",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
     "allowJs": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["app/*"],
-      "@/components/*": ["app/components/*"],
-      "@/lib/*": ["lib/*"],
-      "@/hooks/*": ["hooks/*"],
-      "@/tests/*": ["tests/*"],
-      "mirai-theme": ["../../packages/mirai-theme/src/tokens"],
-      "mirai-theme/*": ["../../packages/mirai-theme/src/*"]
-    }
+      "@/*": [
+        "app/*"
+      ],
+      "@/components/*": [
+        "app/components/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/hooks/*": [
+        "hooks/*"
+      ],
+      "@/tests/*": [
+        "tests/*"
+      ],
+      "mirai-theme": [
+        "../../packages/mirai-theme/src/tokens"
+      ],
+      "mirai-theme/*": [
+        "../../packages/mirai-theme/src/*"
+      ]
+    },
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.mts",
-    "**/*.cts"
+    "**/*.cts",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

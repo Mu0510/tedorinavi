@@ -16,7 +16,7 @@ export function Progress({ value = 0, className, ...props }: ProgressProps) {
       aria-valuemin={0}
       aria-valuemax={100}
       className={clsx(
-        "h-3 w-full overflow-hidden rounded-[var(--radius-md)] bg-[color-mix(in oklab,var(--color-border) 80%,transparent)]",
+        "h-3 w-full overflow-hidden rounded-[var(--radius-md)] bg-[color-mix(in_oklab,var(--color-border)_80%,transparent)]",
         className
       )}
       {...props}

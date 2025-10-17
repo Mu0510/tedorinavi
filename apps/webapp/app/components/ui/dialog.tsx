@@ -17,7 +17,7 @@ export const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={clsx(
-      "fixed inset-0 bg-[color-mix(in oklab,var(--color-bg) 60%,black)]/80 backdrop-blur-sm",
+      "fixed inset-0 bg-[color-mix(in_oklab,var(--color-bg)_60%,black)]/80 backdrop-blur-sm",
       className
     )}
     {...props}
