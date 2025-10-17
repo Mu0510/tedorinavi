@@ -11,7 +11,9 @@
       "@/components/*": ["app/components/*"],
       "@/lib/*": ["lib/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/tests/*": ["tests/*"]
+      "@/tests/*": ["tests/*"],
+      "mirai-theme": ["../../packages/mirai-theme/src/tokens"],
+      "mirai-theme/*": ["../../packages/mirai-theme/src/*"]
     }
   },
   "include": [
