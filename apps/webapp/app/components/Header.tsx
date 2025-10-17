@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 export default function Header() {
   return (
-    <header className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-xl)] bg-[var(--color-panel)] px-6 py-5 shadow-[var(--shadow-md)]">
+    <header className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-xl)] border border-[color-mix(in_oklab,var(--color-border)_65%,transparent)] bg-[color-mix(in_oklab,var(--color-panel)_90%,transparent)] px-6 py-5 shadow-none">
       <div className="flex flex-col">
         <span className="text-sm uppercase tracking-wide text-[var(--color-text-muted)] font-english">
           Mirai Labs

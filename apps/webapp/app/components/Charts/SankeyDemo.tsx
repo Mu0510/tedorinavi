@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import { ResponsiveContainer, Sankey } from "recharts";
 import { sankeyColors } from "mirai-theme";
 
@@ -13,12 +14,9 @@ const data = {
   ]
 };
 
-export default function SankeyDemo() {
+export default function SankeyDemo({ className }: { className?: string }) {
   return (
-    <div className="h-72 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-panel)] p-4">
-      <h3 className="mb-2 text-sm font-medium text-[var(--color-text-secondary)]">
-        サンプルフロー（色トークンの参照例）
-      </h3>
+    <div className={clsx("h-64 sm:h-72", className)}>
       <ResponsiveContainer width="100%" height="100%">
         <Sankey
           data={data}

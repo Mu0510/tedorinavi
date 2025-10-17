@@ -8,6 +8,7 @@ export interface KpiCardProps {
   value: string;
   hint?: string;
   tone?: Tone;
+  className?: string;
 }
 
 const toneText: Record<Tone, string> = {
@@ -16,9 +17,20 @@ const toneText: Record<Tone, string> = {
   expense: "text-[var(--color-expense)]"
 };
 
-export default function KpiCard({ label, value, hint, tone = "default" }: KpiCardProps) {
+export default function KpiCard({
+  label,
+  value,
+  hint,
+  tone = "default",
+  className
+}: KpiCardProps) {
   return (
-    <Card className="flex flex-col gap-2">
+    <Card
+      className={clsx(
+        "flex flex-col gap-2 border-[color-mix(in_oklab,var(--color-border)_55%,transparent)] bg-[color-mix(in_oklab,var(--color-panel)_92%,transparent)] shadow-none",
+        className
+      )}
+    >
       <span className="text-sm text-[var(--color-text-muted)]">{label}</span>
       <span
         className={clsx("text-3xl font-semibold tracking-tight", toneText[tone])}

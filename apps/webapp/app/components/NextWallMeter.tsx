@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import { Button } from "./ui/button";
 import Progress from "./ui/progress";
 
@@ -9,16 +10,23 @@ export interface NextWallMeterProps {
   };
   currentAnnual: number;
   onAdjust?: (delta: number) => void;
+  className?: string;
 }
 
 export default function NextWallMeter({
   next,
   currentAnnual,
-  onAdjust
+  onAdjust,
+  className
 }: NextWallMeterProps) {
   if (!next) {
     return (
-      <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-panel)_85%,transparent)] p-6">
+      <div
+        className={clsx(
+          "space-y-3 rounded-[var(--radius-xl)] border border-[color-mix(in_oklab,var(--color-border)_55%,transparent)] bg-[color-mix(in_oklab,var(--color-panel)_92%,transparent)] p-6 shadow-none",
+          className
+        )}
+      >
         <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">
           すべての壁を越えました
         </h3>
@@ -34,7 +42,12 @@ export default function NextWallMeter({
   const formattedRemaining = new Intl.NumberFormat("ja-JP").format(next.amount);
 
   return (
-    <div className="space-y-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-panel)] p-6 shadow-[var(--shadow-md)]">
+    <div
+      className={clsx(
+        "space-y-4 rounded-[var(--radius-xl)] border border-[color-mix(in_oklab,var(--color-border)_55%,transparent)] bg-[color-mix(in_oklab,var(--color-panel)_92%,transparent)] p-6 shadow-none",
+        className
+      )}
+    >
       <div>
         <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">
           次の壁まであと ¥{formattedRemaining}

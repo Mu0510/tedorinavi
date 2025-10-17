@@ -1,0 +1,193 @@
+# Page snapshot
+
+```yaml
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: Mirai Labs
+        - heading "年収の壁シミュレーター" [level=1] [ref=e7]
+        - paragraph [ref=e8]: 月収と条件を入力して、到達した壁と次のアクションを確認しましょう。
+      - generic [ref=e9]:
+        - link "GitHub リポジトリを開く" [ref=e10] [cursor=pointer]:
+          - /url: https://github.com/mirai-labs/tedorinavi
+          - img [ref=e11]
+          - text: GitHub
+        - button "ライト" [ref=e14]:
+          - img [ref=e15]
+          - generic [ref=e21]: ライト
+    - generic [ref=e22]:
+      - tablist [ref=e23]:
+        - tab "個人" [selected] [ref=e24]
+        - tab "配偶者" [ref=e25]
+        - tab "学生（19〜22歳）" [ref=e26]
+      - tabpanel "個人" [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e31]:
+              - generic [ref=e32]:
+                - generic [ref=e33]:
+                  - heading "条件を入力" [level=2] [ref=e34]
+                  - paragraph [ref=e35]: かんたん入力から始めて、必要に応じてプロ向け条件を開いてください。
+                - generic [ref=e36]:
+                  - generic [ref=e37]: "モード: かんたん"
+                  - generic [ref=e38]:
+                    - text: かんたん
+                    - switch "プロモードに切り替え" [ref=e39] [cursor=pointer]
+                    - checkbox
+                    - text: プロ
+              - generic [ref=e40]:
+                - generic [ref=e41]:
+                  - generic [ref=e42]:
+                    - generic [ref=e43]: 月収（額面）
+                    - button "入力ヒント" [ref=e44]
+                  - textbox "月収（額面）" [ref=e45]: 120,000
+                  - paragraph [ref=e46]: "例: 120000"
+                - generic [ref=e47]:
+                  - generic [ref=e48]:
+                    - text: 想定継続月数
+                    - textbox "想定継続月数" [ref=e49]: "12"
+                  - generic [ref=e50]:
+                    - text: 週あたり労働時間
+                    - combobox [ref=e51]:
+                      - img [ref=e52]
+                    - combobox [ref=e54]
+                - generic [ref=e55]:
+                  - generic [ref=e56]:
+                    - text: 従業員規模
+                    - combobox [ref=e57]:
+                      - img [ref=e58]
+                    - combobox [ref=e60]
+                  - generic [ref=e61]:
+                    - text: 扶養関係
+                    - combobox [ref=e62]:
+                      - img [ref=e63]
+                    - combobox [ref=e65]
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - generic [ref=e68]:
+                  - heading "比較スナップショット" [level=3] [ref=e69]
+                  - paragraph [ref=e70]: 現在の入力を保存して、年収・手取りの差分を一目で比較できます。
+                - generic [ref=e71]:
+                  - switch "現在の入力を比較用に保存" [ref=e72] [cursor=pointer]
+                  - checkbox
+                  - generic [ref=e73]: 比較モード OFF
+              - separator [ref=e74]
+              - generic [ref=e75]:
+                - generic [ref=e76]: スナップショットを更新すると、最新の入力で差分が再計算されます。
+                - button "スナップショット更新" [disabled]
+              - paragraph [ref=e77]: モードをオンにすると、保存した条件との差をカードで表示します。
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - generic [ref=e80]:
+                - heading "主要指標" [level=2] [ref=e81]
+                - generic [ref=e82]: "モード: individual"
+              - generic [ref=e83]:
+                - generic [ref=e84]:
+                  - generic [ref=e85]: 年間見込み収入
+                  - generic [ref=e86]: ￥1,440,000
+                  - generic [ref=e87]: 賞与は月平均換算で計算しています。
+                - generic [ref=e88]:
+                  - generic [ref=e89]: 推定手取り
+                  - generic [ref=e90]: ￥1,036,800
+                  - generic [ref=e91]: 社会保険・税の概算を差し引いた金額です。
+                - generic [ref=e92]:
+                  - generic [ref=e93]: 到達した壁
+                  - generic [ref=e94]: 3件
+                  - generic [ref=e95]: バッジで到達状況を確認できます。
+            - generic [ref=e96]:
+              - generic [ref=e97]:
+                - heading "到達状況と次のアクション" [level=3] [ref=e98]
+                - paragraph [ref=e99]: 直近の制度変更と自治体差異に注意しながら、次に備えましょう。
+              - generic [ref=e100]:
+                - generic [ref=e101]: 住民税（参考）110万円
+                - generic [ref=e102]: 配偶者控除（住民税）123万円
+                - generic [ref=e103]: 国民年金・健康保険 130万円
+              - separator [ref=e104]
+              - generic [ref=e105]:
+                - generic [ref=e106]:
+                  - heading "次の壁まであと ¥160,000" [level=3] [ref=e107]
+                  - paragraph [ref=e108]: 所得税（概算）160万円 に差し掛かります。必要な手続きや保険料を早めに確認しましょう。
+                - progressbar [ref=e109]
+                - generic [ref=e111]:
+                  - generic [ref=e112]: ワンクリックで試算を更新
+                  - button "+1万円" [ref=e113]
+                  - button "+5万円" [ref=e114]
+              - alert [ref=e115]:
+                - img [ref=e117]
+                - generic [ref=e119]:
+                  - paragraph [ref=e120]: 逆転現象の可能性
+                  - paragraph [ref=e121]: 社会保険料や税の増加により手取りが減少しています。勤務時間や支給方法を調整できるか確認し、必要に応じて勤務先へ相談しましょう。
+            - generic [ref=e122]:
+              - heading "メリット / デメリット" [level=3] [ref=e123]
+              - generic [ref=e124]:
+                - generic [ref=e125]:
+                  - heading "メリット" [level=4] [ref=e126]
+                  - list [ref=e127]:
+                    - listitem [ref=e128]:
+                      - generic [ref=e129]: ＋
+                      - generic [ref=e130]: 社会保険加入で医療・年金の保障が安定します。
+                - generic [ref=e131]:
+                  - heading "デメリット" [level=4] [ref=e132]
+                  - list [ref=e133]:
+                    - listitem [ref=e134]:
+                      - generic [ref=e135]: −
+                      - generic [ref=e136]: 手取りが一時的に減るため収支シミュレーションが必要です。
+            - generic [ref=e137]:
+              - generic [ref=e138]:
+                - heading "月別推移" [level=3] [ref=e139]
+                - paragraph [ref=e140]: 主要な壁にガイドラインを表示しています。各月の累積額はスクリーンリーダでも確認できます。
+              - table [ref=e143]:
+                - caption [ref=e144]: 月別累積金額
+                - rowgroup [ref=e145]:
+                  - row [ref=e146]:
+                    - columnheader [ref=e147]: 月
+                    - columnheader [ref=e148]: 累積額 (円)
+                - rowgroup [ref=e149]:
+                  - row [ref=e150]:
+                    - cell [ref=e151]: "1"
+                    - cell [ref=e152]: "120000"
+                  - row [ref=e153]:
+                    - cell [ref=e154]: "2"
+                    - cell [ref=e155]: "240000"
+                  - row [ref=e156]:
+                    - cell [ref=e157]: "3"
+                    - cell [ref=e158]: "360000"
+                  - row [ref=e159]:
+                    - cell [ref=e160]: "4"
+                    - cell [ref=e161]: "480000"
+                  - row [ref=e162]:
+                    - cell [ref=e163]: "5"
+                    - cell [ref=e164]: "600000"
+                  - row [ref=e165]:
+                    - cell [ref=e166]: "6"
+                    - cell [ref=e167]: "720000"
+                  - row [ref=e168]:
+                    - cell [ref=e169]: "7"
+                    - cell [ref=e170]: "840000"
+                  - row [ref=e171]:
+                    - cell [ref=e172]: "8"
+                    - cell [ref=e173]: "960000"
+                  - row [ref=e174]:
+                    - cell [ref=e175]: "9"
+                    - cell [ref=e176]: "1080000"
+                  - row [ref=e177]:
+                    - cell [ref=e178]: "10"
+                    - cell [ref=e179]: "1200000"
+                  - row [ref=e180]:
+                    - cell [ref=e181]: "11"
+                    - cell [ref=e182]: "1320000"
+                  - row [ref=e183]:
+                    - cell [ref=e184]: "12"
+                    - cell [ref=e185]: "1440000"
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - heading "参考ノート" [level=3] [ref=e189]
+                - paragraph [ref=e190]: 実際の税率・保険料は制度により異なります。最新情報に差し替え可能な構造です。
+                - list [ref=e191]:
+                  - listitem [ref=e192]: ・社会保険料率は仮に 14% / 18% を適用しています（実際の料率は地域で異なります）。
+                  - listitem [ref=e193]: ・住民税は概算で 10% を計算しています。自治体により免税点が違う場合があります。
+              - generic [ref=e195]:
+                - generic [ref=e196]: キャッシュフローイメージ（デモ）
+                - generic [ref=e197]: ￥104万 / 手取り
+```

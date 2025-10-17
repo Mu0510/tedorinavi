@@ -10,7 +10,6 @@ import {
   YAxis
 } from "recharts";
 import { colors } from "mirai-theme";
-import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 export interface IncomeAreaProps {
   data: Array<{ month: number; cumulative: number }>;
@@ -36,7 +35,7 @@ const tooltipRenderer = ({
   active,
   payload,
   label
-}: TooltipProps<ValueType, NameType>) => {
+}: TooltipProps<number, number>) => {
   if (!active || !payload?.length) return null;
   const value = payload[0].value as number;
   return (
