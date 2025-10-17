@@ -1,0 +1,57 @@
+@layer components {
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-[var(--radius-md)] text-sm font-medium leading-5 transition ease-in-out duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply btn-base text-white bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-hover)] focus-visible:ring-offset-[var(--color-panel)];
+  }
+
+  .btn-outline {
+    @apply btn-base border border-[var(--color-primary-500)] text-[var(--color-primary-500)] bg-transparent hover:bg-[var(--color-hover)];
+  }
+
+  .btn-muted {
+    @apply btn-base bg-[color-mix(in oklab,var(--color-primary-500) 8%,transparent)] text-[var(--color-text-primary)];
+  }
+
+  .input {
+    @apply w-full rounded-[var(--radius-md)] bg-[var(--color-input)] border border-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:outline-none;
+  }
+
+  .select-trigger {
+    @apply input h-10 inline-flex items-center justify-between;
+  }
+
+  .switch-root {
+    @apply relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-transparent bg-[color-mix(in oklab,var(--color-primary-500) 35%,var(--color-panel))] transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)];
+  }
+
+  .switch-thumb {
+    @apply pointer-events-none block h-5 w-5 transform rounded-full bg-white shadow-[var(--shadow-sm)] ring-0 transition duration-200 ease-in-out;
+  }
+
+  .card {
+    @apply rounded-[var(--radius-xl)] bg-[var(--color-panel)] shadow-[var(--shadow-md)] p-6 border border-[color-mix(in oklab,var(--color-border) 70%,transparent)];
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-[color-mix(in oklab,var(--color-primary-500) 15%,var(--color-panel))] text-[var(--color-text-primary)];
+  }
+
+  .badge-income {
+    @apply badge bg-[var(--color-income)] text-white;
+  }
+
+  .badge-expense {
+    @apply badge bg-[var(--color-expense)] text-white;
+  }
+
+  .alert {
+    @apply border rounded-[var(--radius-lg)] p-4 flex gap-3 items-start bg-[color-mix(in oklab,var(--processing-light) 70%,var(--color-panel))] border-[var(--processing-error)];
+  }
+
+  .tooltip-content {
+    @apply bg-[var(--color-panel)] border border-[var(--color-border)] shadow-[var(--shadow-md)] text-xs px-2.5 py-1.5 rounded-[var(--radius-md)] text-[var(--color-text-primary)];
+  }
+}

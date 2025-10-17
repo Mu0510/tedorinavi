@@ -1,0 +1,32 @@
+{
+  "name": "mirai-theme",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/tokens.ts",
+  "types": "./src/tokens.ts",
+  "exports": {
+    ".": {
+      "types": "./src/tokens.ts",
+      "default": "./src/tokens.ts"
+    },
+    "./tokens": {
+      "types": "./src/tokens.ts",
+      "default": "./src/tokens.ts"
+    },
+    "./index.css": "./index.css",
+    "./mirai-theme.css": "./src/mirai-theme.css",
+    "./components.css": "./src/components.css"
+  },
+  "sideEffects": [
+    "./index.css",
+    "./src/mirai-theme.css",
+    "./src/components.css"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "test": "echo \"mirai-theme: no tests\""
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0-alpha.6"
+  }
+}

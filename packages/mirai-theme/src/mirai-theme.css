@@ -1,0 +1,125 @@
+@theme {
+  --color-primary-400: #30bca7;
+  --color-primary-500: #2aa693;
+  --color-primary-600: #238778;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+:root {
+  color-scheme: light;
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-noto-sans: "Noto Sans", system-ui, -apple-system, sans-serif;
+  --font-noto-sans-jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+}
+
+.theme-light {
+  --color-bg: #ffffff;
+  --color-panel: #ffffff;
+  --color-border: #e5e7eb;
+  --color-hover: color-mix(in oklab, var(--color-primary-500) 12%, white);
+  --color-input: #ffffff;
+
+  --color-text-primary: #000000;
+  --color-text-secondary: #85868e;
+  --color-text-muted: #6b7280;
+
+  --color-primary-hover: var(--color-primary-600);
+  --color-income: var(--color-primary-500);
+  --color-expense: var(--color-danger-500);
+  --color-accent: var(--color-primary-400);
+}
+
+.theme-dark {
+  color-scheme: dark;
+  --color-bg: #0b1020;
+  --color-panel: #141a2d;
+  --color-border: #263258;
+  --color-hover: #1d2745;
+  --color-input: #0f1527;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #9aa4bf;
+  --color-text-muted: #9aa4bf;
+
+  --color-primary-hover: color-mix(in oklab, var(--color-primary-500) 15%, black);
+  --color-income: var(--color-primary-500);
+  --color-expense: var(--color-danger-600);
+  --color-accent: #5b8cff;
+}
+
+:root,
+.theme-light,
+.theme-dark {
+  --sankey-total: #4f566b;
+  --sankey-income: #2aa693;
+  --sankey-income-light: #e5f7f4;
+  --sankey-expense: #dc2626;
+  --sankey-expense-light: #fbe2e7;
+  --sankey-carryover-light: #e5e7eb;
+  --sankey-text: #1f2937;
+
+  --cash-balance-box: var(--color-primary-500);
+  --cash-balance-light: var(--sankey-income-light);
+  --processing-error: var(--sankey-expense);
+  --processing-light: var(--sankey-expense-light);
+  --percentage-dark: var(--sankey-text);
+}
+
+@layer base {
+  html,
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-noto-sans-jp);
+  }
+
+  body {
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  .font-japanese {
+    font-family: var(--font-noto-sans-jp);
+    letter-spacing: 0.01em;
+  }
+
+  .font-english {
+    font-family: var(--font-inter);
+    letter-spacing: 0em;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
