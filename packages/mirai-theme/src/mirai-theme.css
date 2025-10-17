@@ -19,9 +19,6 @@
   --font-inter: "Inter", system-ui, -apple-system, sans-serif;
   --font-noto-sans: "Noto Sans", system-ui, -apple-system, sans-serif;
   --font-noto-sans-jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-}
-
-.theme-light {
   --color-bg: #ffffff;
   --color-panel: #ffffff;
   --color-border: #e5e7eb;
@@ -38,27 +35,7 @@
   --color-accent: var(--color-primary-400);
 }
 
-.theme-dark {
-  color-scheme: dark;
-  --color-bg: #0b1020;
-  --color-panel: #141a2d;
-  --color-border: #263258;
-  --color-hover: #1d2745;
-  --color-input: #0f1527;
-
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #9aa4bf;
-  --color-text-muted: #9aa4bf;
-
-  --color-primary-hover: color-mix(in oklab, var(--color-primary-500) 15%, black);
-  --color-income: var(--color-primary-500);
-  --color-expense: var(--color-danger-600);
-  --color-accent: #5b8cff;
-}
-
-:root,
-.theme-light,
-.theme-dark {
+:root {
   --sankey-total: #4f566b;
   --sankey-income: #2aa693;
   --sankey-income-light: #e5f7f4;

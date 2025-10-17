@@ -2,8 +2,13 @@
 @import "mirai-theme/index.css";
 
 @layer base {
+  :root {
+    --page-bg: #e2f6f2;
+    --surface-bg: #ffffff;
+  }
+
   body {
-    background: var(--color-bg);
+    background: var(--page-bg);
     color: var(--color-text-primary);
     font-family: var(--font-noto-sans-jp), var(--font-inter), sans-serif;
     transition: background-color 200ms ease, color 200ms ease;

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { RESIDENT_110, simulate, type SimulationInput, TAX_160 } from "@/lib/calc";
+import {
+  DEFAULT_STATE,
+  parseSimulationState,
+  serializeSimulationState,
+  type DashboardState
+} from "@/lib/simulationState";
 
 const baseInput: SimulationInput = {
   monthlyIncome: 120_000,
@@ -47,5 +53,34 @@ describe("simulate", () => {
     expect(ids).toContain("SOCIAL_106");
     expect(result.takeHome).toBeLessThan(result.annualIncome);
     expect(result.notes.join(" ")).toContain("社会保険料率");
+  });
+
+});
+
+describe("simulation state helpers", () => {
+  it("serializes and parses dashboard extras", () => {
+    const initial: DashboardState = {
+      ...DEFAULT_STATE,
+      monthlyIncome: 180_000,
+      months: 10,
+      currentYearIncome: 920_000,
+      incomeEntry: "annual"
+    };
+
+    const serialized = serializeSimulationState(initial);
+    expect(serialized.ytd).toBe(920000);
+    expect(serialized.entry).toBe("annual");
+
+    const params = new URLSearchParams();
+    Object.entries(serialized).forEach(([key, value]) => {
+      if (value !== undefined) {
+        params.set(key, String(value));
+      }
+    });
+
+    const parsed = parseSimulationState(params, DEFAULT_STATE);
+    expect(parsed.monthlyIncome).toBe(initial.monthlyIncome);
+    expect(parsed.currentYearIncome).toBe(920000);
+    expect(parsed.incomeEntry).toBe("annual");
   });
 });

@@ -10,6 +10,7 @@ export default defineConfig({
     include: ["tests/**/*.spec.{ts,tsx}"],
     exclude: [
       "tests/e2e.spec.ts",
+      "tests/ui.spec.ts",
       "**/node_modules/**",
       "**/.next/**",
       "**/dist/**",

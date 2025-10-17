@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Button } from "./ui/button";
+import { formatCurrencyJPY } from "@/lib/format";
 import Progress from "./ui/progress";
 
 export interface NextWallMeterProps {
@@ -8,18 +8,24 @@ export interface NextWallMeterProps {
     label: string;
     amount: number;
   };
-  currentAnnual: number;
-  onAdjust?: (delta: number) => void;
+  projectedAnnual: number;
+  threshold: number | null;
+  actualYearIncome: number;
+  remainingHeadroom: number;
+  progressPercent: number | null;
   className?: string;
 }
 
 export default function NextWallMeter({
   next,
-  currentAnnual,
-  onAdjust,
+  projectedAnnual,
+  threshold,
+  actualYearIncome,
+  remainingHeadroom,
+  progressPercent,
   className
 }: NextWallMeterProps) {
-  if (!next) {
+  if (threshold === null || !next) {
     return (
       <div
         className={clsx(
@@ -27,19 +33,21 @@ export default function NextWallMeter({
           className
         )}
       >
-        <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">
-          すべての壁を越えました
-        </h3>
+        <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">すべての壁を超えています</h3>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          追加で到達する壁はありません。条件の見直しや控除を専門家に相談しましょう。
+          これ以上の壁はありません。社会保険や税務の負担を把握しながら、新しい目標を検討しましょう。
+        </p>
+        <p className="text-xs text-[var(--color-text-muted)]">
+          推定年収 {formatCurrencyJPY(projectedAnnual)} / 今年の累計 {formatCurrencyJPY(actualYearIncome)}
         </p>
       </div>
     );
   }
 
-  const target = currentAnnual + next.amount;
-  const progress = target === 0 ? 0 : Math.min(100, (currentAnnual / target) * 100);
-  const formattedRemaining = new Intl.NumberFormat("ja-JP").format(next.amount);
+  const remaining = Math.max(0, remainingHeadroom);
+  const planBuffer = Math.max(0, next.amount);
+  const overThreshold = remaining === 0;
+  const progressValue = progressPercent === null ? 0 : progressPercent;
 
   return (
     <div
@@ -48,31 +56,35 @@ export default function NextWallMeter({
         className
       )}
     >
-      <div>
+      <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">
-          次の壁まであと ¥{formattedRemaining}
+          次の壁: {next.label}
         </h3>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          {next.label} に差し掛かります。必要な手続きや保険料を早めに確認しましょう。
+          閾値は {formatCurrencyJPY(threshold)}。今年のこれまでの収入は{" "}
+          {formatCurrencyJPY(actualYearIncome)} です。
+        </p>
+        <p className="text-sm text-[var(--color-text-muted)]">
+          {overThreshold
+            ? "すでに閾値を超えています。社会保険や税の手続きが必要か確認しましょう。"
+            : `あと ${formatCurrencyJPY(remaining)} までは手取りの急減を避けられます。`}
         </p>
       </div>
-      <Progress value={progress} />
-      <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--color-text-muted)]">
-        <span>ワンクリックで試算を更新</span>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => onAdjust?.(10000)}
-        >
-          +1万円
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => onAdjust?.(50000)}
-        >
-          +5万円
-        </Button>
+
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs text-[var(--color-text-muted)]">
+          <span>現在 {formatCurrencyJPY(actualYearIncome)}</span>
+          <span>閾値 {formatCurrencyJPY(threshold)}</span>
+        </div>
+        <Progress value={progressValue} />
+      </div>
+
+      <div className="text-xs text-[var(--color-text-muted)]">
+        <p>推定年収 {formatCurrencyJPY(projectedAnnual)}</p>
+        <p>
+          プラン上の余白 {formatCurrencyJPY(planBuffer)} / 実績ベースの余白{" "}
+          {formatCurrencyJPY(remaining)}
+        </p>
       </div>
     </div>
   );

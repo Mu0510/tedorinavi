@@ -26,13 +26,8 @@
    console.log(tokens.sankey.income); // #2AA693
    ```
 
-## テーマ切り替え
+## テーマについて
 
-ルート要素に `.theme-light` または `.theme-dark` を付与します。Next.js の `layout.tsx` などで初期クラスを設定し、ボタンで切り替えてください。
-
-```tsx
-document.documentElement.classList.toggle("theme-dark");
-document.documentElement.classList.toggle("theme-light");
-```
+2025年10月現在、`mirai-theme` はライトテーマのみを提供し、CSS 変数はルート要素に直接適用されます。アプリケーション側でテーマクラスを切り替える必要はありません。
 
 `mirai-theme/src/components.css` には Button/Input/Card などのレシピが含まれます。必要に応じて `@apply` でカスタマイズしてください。
