@@ -4,7 +4,10 @@
     "outDir": "dist",
     "declaration": true,
     "emitDeclarationOnly": true,
-    "composite": true
+    "composite": true,
+    "noEmit": false,
+    "module": "NodeNext",
+    "types": []
   },
   "include": ["src/**/*.ts"]
 }
