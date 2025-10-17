@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Github } from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "./ThemeToggle.tsx";
 import { Button } from "./ui/button";
 
 export default function Header() {
