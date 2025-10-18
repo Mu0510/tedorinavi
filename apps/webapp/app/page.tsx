@@ -1,11 +1,9 @@
 'use client';
 
 import Link from "next/link";
-import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import IncomeFormMini from "./components/IncomeFormMini";
 import useUrlState from "@/hooks/useUrlState";
-import { simulate } from "@/lib/calc";
 import {
   DEFAULT_STATE,
   STORAGE_KEY,
@@ -55,19 +53,18 @@ export default function LandingPage() {
     debounceMs: 200
   });
 
-  const preview = useMemo(() => simulate(inputs), [inputs]);
-  const nextPreview =
-    preview.next !== undefined
-      ? `次の壁まであと ${preview.next.amount.toLocaleString("ja-JP")} 円`
-      : "すべての壁を超えています";
-
   const handleStart = () => {
     const serialized = serializeSimulationState(inputs);
     const params = new URLSearchParams();
     Object.entries(serialized).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
-        params.set(key, String(value));
+      if (value === undefined || value === null) {
+        return;
       }
+      const normalized = String(value);
+      if (normalized.length === 0) {
+        return;
+      }
+      params.set(key, normalized);
     });
     router.push(`/app?${params.toString()}`);
   };

@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,10 +19,25 @@ const variantClass: Record<ButtonVariants, string> = {
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", asChild = false, ...props }, ref) => {
-    const Comp = (asChild ? Slot : "button") as React.ElementType;
+  ({ className, variant = "primary", asChild = false, children, ...props }, ref) => {
     const merged = twMerge(clsx("btn-base", variantClass[variant], className));
-    return <Comp className={merged} ref={ref} {...props} />;
+
+    if (asChild && React.isValidElement(children)) {
+      const child = React.Children.only(children) as React.ReactElement;
+      const childClassName = (child.props as { className?: string }).className;
+
+      return React.cloneElement(child, {
+        ...props,
+        className: twMerge(childClassName, merged),
+        ref
+      });
+    }
+
+    return (
+      <button className={merged} ref={ref} {...props}>
+        {children}
+      </button>
+    );
   }
 );
 

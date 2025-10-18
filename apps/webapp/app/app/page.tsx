@@ -8,7 +8,7 @@ import A11yTable from "@/components/A11yTable";
 import EditInputsSheet from "@/components/EditInputsSheet";
 import MeritDemeritList from "@/components/MeritDemeritList";
 import useUrlState from "@/hooks/useUrlState";
-import { simulate, type SimulationInput, type SimulationOutput } from "@/lib/calc";
+import { simulate, type SimulationOutput } from "@/lib/calc";
 import {
   DEFAULT_STATE,
   STORAGE_KEY,
@@ -102,6 +102,14 @@ export default function AppDashboard() {
     nextThreshold !== null && nextThreshold > 0
       ? Math.min(100, Math.max(0, (inputs.currentYearIncome / nextThreshold) * 100))
       : null;
+
+  const monthlyIncome = Math.max(0, inputs.monthlyIncome);
+  const estimatedMonthsRaw = monthlyIncome > 0 ? inputs.currentYearIncome / monthlyIncome : 0;
+  let completedMonths = Number.isFinite(estimatedMonthsRaw) ? Math.floor(estimatedMonthsRaw) : 0;
+  if (inputs.currentYearIncome > 0 && completedMonths === 0) {
+    completedMonths = 1;
+  }
+  const actualMonths = Math.max(0, Math.min(simulation.series.length, completedMonths));
 
   const handleSave = () => {
     setInputs(draft);
@@ -242,6 +250,7 @@ export default function AppDashboard() {
               annualTotal={simulation.annualIncome}
               takeHomeTotal={simulation.takeHome}
               reachedThresholds={simulation.reached.map((wall) => wall.id)}
+              actualMonths={actualMonths}
             />
             <A11yTable data={simulation.series} />
           </Card>

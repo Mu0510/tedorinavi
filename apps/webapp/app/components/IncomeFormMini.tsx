@@ -17,7 +17,6 @@ import {
 import { ChevronDown } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-import Badge from "./ui/badge";
 
 export interface IncomeFormMiniProps {
   value: DashboardState;

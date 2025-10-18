@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Area,
   AreaChart,
@@ -17,6 +18,7 @@ export interface IncomeAreaProps {
   annualTotal: number;
   takeHomeTotal: number;
   reachedThresholds?: string[];
+  actualMonths?: number;
 }
 
 const THRESHOLDS: Array<{ id: string; value: number; label: string }> = [
@@ -47,7 +49,7 @@ const tooltipRenderer = ({
     <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3 shadow-[var(--shadow-md)] text-sm text-[var(--color-text-primary)]">
       <div className="font-semibold">月 {label}</div>
       <ul className="mt-2 space-y-1">
-        {payload.map((entry) => (
+        {payload.filter((entry) => entry.value != null).map((entry) => (
           <li key={entry.dataKey as string} className="flex items-center justify-between gap-6">
             <span className="text-xs text-[var(--color-text-secondary)]">{entry.name}</span>
             <span className="font-medium text-[var(--color-text-primary)]">
@@ -76,14 +78,14 @@ function interpolateMonth(data: Array<{ month: number; cumulative: number }>, va
   return null;
 }
 
-export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedThresholds = [] }: IncomeAreaProps) {
-  if (!data.length) {
-    return (
-      <div className="flex h-64 items-center justify-center rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-panel)] text-sm text-[var(--color-text-secondary)]">
-        データがありません
-      </div>
-    );
-  }
+export default function IncomeArea({
+  data,
+  annualTotal,
+  takeHomeTotal,
+  reachedThresholds = [],
+  actualMonths
+}: IncomeAreaProps) {
+  const isEmpty = data.length === 0;
 
   const verticalMarkers = THRESHOLDS.map((threshold) => ({
     ...threshold,
@@ -91,6 +93,67 @@ export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedTh
   })).filter((marker) => marker.month !== null) as Array<
     { id: string; label: string; value: number; month: number }
   >;
+  type Marker = (typeof verticalMarkers)[number];
+  const markerElements = useMemo<JSX.Element[]>(() => {
+    if (!verticalMarkers.length) return [];
+    const clusterThreshold = 60_000;
+    const clusters: Marker[][] = [];
+    let currentCluster: Marker[] = [verticalMarkers[0]];
+
+    for (let index = 1; index < verticalMarkers.length; index += 1) {
+      const marker = verticalMarkers[index];
+      const previous = currentCluster[currentCluster.length - 1];
+      if (Math.abs(marker.value - previous.value) <= clusterThreshold) {
+        currentCluster.push(marker);
+      } else {
+        clusters.push(currentCluster);
+        currentCluster = [marker];
+      }
+    }
+
+    clusters.push(currentCluster);
+
+    const offsetStep = 28;
+    const markersWithOffset: Array<Marker & { labelOffset: number }> = [];
+    clusters.forEach((cluster) => {
+      if (cluster.length === 1) {
+        markersWithOffset.push({ ...cluster[0], labelOffset: 0 });
+        return;
+      }
+      const start = -((cluster.length - 1) / 2) * offsetStep;
+      cluster.forEach((marker, clusterIndex) => {
+        markersWithOffset.push({ ...marker, labelOffset: start + clusterIndex * offsetStep });
+      });
+    });
+
+    return markersWithOffset.map((marker) => (
+      <ReferenceLine
+        key={marker.id}
+        y={marker.value}
+        stroke={colors.sankey.text}
+        strokeDasharray="6 6"
+      >
+        <Label
+          value={marker.label}
+          fill={colors.sankey.text}
+          fontSize={12}
+          position="right"
+          dx={8}
+          dy={marker.labelOffset}
+          className="chart-threshold-label"
+        />
+      </ReferenceLine>
+    ));
+  }, [verticalMarkers]);
+
+  if (isEmpty) {
+    return (
+      <div className="flex h-64 items-center justify-center rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-panel)] text-sm text-[var(--color-text-secondary)]">
+        データがありません
+      </div>
+    );
+  }
+
   const totalDeduction = Math.max(0, annualTotal - takeHomeTotal);
   const reachedMarkers = verticalMarkers.filter((marker) => reachedThresholds.includes(marker.id));
   const deductionPerWall = reachedMarkers.length > 0 ? totalDeduction / reachedMarkers.length : 0;
@@ -109,10 +172,35 @@ export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedTh
     return { ...point, net };
   });
 
+  const clampedActualMonths = Math.max(
+    0,
+    Math.min(actualMonths ?? combinedData.length, combinedData.length)
+  );
+  const futureStartMonth =
+    clampedActualMonths >= combinedData.length
+      ? combinedData.length + 1
+      : Math.max(1, clampedActualMonths + 1);
+
+  const chartData = combinedData.map((point) => {
+    const isActual = clampedActualMonths > 0 && point.month <= clampedActualMonths;
+    const includeBoundary =
+      clampedActualMonths > 0 && clampedActualMonths < combinedData.length && point.month === clampedActualMonths;
+    const isFuture = point.month >= futureStartMonth;
+    return {
+      ...point,
+      cumulativeActual: isActual ? point.cumulative : null,
+      netActual: isActual ? point.net : null,
+      cumulativeProjected: isFuture || includeBoundary ? point.cumulative : null,
+      netProjected: isFuture || includeBoundary ? point.net : null
+    };
+  });
+  const hasProjectedGross = chartData.some((point) => point.cumulativeProjected !== null);
+  const hasProjectedNet = chartData.some((point) => point.netProjected !== null);
+
   return (
     <div className="income-area-chart h-[400px] md:h-[650px]">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={combinedData} margin={{ top: 48, right: 56, left: 16, bottom: 24 }}>
+        <AreaChart data={chartData} margin={{ top: 40, right: 128, left: 16, bottom: 24 }}>
           <defs>
             <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={colors.primary[400]} stopOpacity={0.8} />
@@ -121,6 +209,14 @@ export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedTh
             <linearGradient id="takeHomeGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={colors.dark.accent} stopOpacity={0.6} />
               <stop offset="95%" stopColor={colors.dark.accent} stopOpacity={0.05} />
+            </linearGradient>
+            <linearGradient id="incomeGradientProjected" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={colors.primary[400]} stopOpacity={0.35} />
+              <stop offset="95%" stopColor={colors.primary[400]} stopOpacity={0.04} />
+            </linearGradient>
+            <linearGradient id="takeHomeGradientProjected" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={colors.dark.accent} stopOpacity={0.25} />
+              <stop offset="95%" stopColor={colors.dark.accent} stopOpacity={0.03} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="4 4" stroke="var(--color-border)" />
@@ -139,42 +235,53 @@ export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedTh
           />
           <Tooltip content={tooltipRenderer} />
           <Area
-            type="stepAfter"
-            dataKey="cumulative"
+            type="linear"
+            dataKey="cumulativeActual"
             name="累積額（額面）"
             stroke={colors.primary[500]}
             strokeWidth={2}
             fill="url(#incomeGradient)"
             activeDot={{ r: 5 }}
+            isAnimationActive={false}
           />
+          {hasProjectedGross && (
+            <Area
+              type="linear"
+              dataKey="cumulativeProjected"
+              name="累積額（額面・予測）"
+              stroke={colors.primary[500]}
+              strokeWidth={2}
+              strokeDasharray="6 4"
+              strokeLinecap="round"
+              fill="url(#incomeGradientProjected)"
+              isAnimationActive={false}
+              connectNulls
+            />
+          )}
           <Area
-            type="stepAfter"
-            dataKey="net"
+            type="linear"
+            dataKey="netActual"
             name="累積額（手取り）"
             stroke={colors.dark.accent}
             strokeWidth={2}
             fill="url(#takeHomeGradient)"
             isAnimationActive={false}
           />
-          {verticalMarkers.map((marker) => (
-            <ReferenceLine
-              key={marker.id}
-              x={marker.month}
-              stroke={colors.sankey.text}
-              strokeDasharray="4 4"
-            >
-              <Label
-                value={marker.label}
-                fill={colors.sankey.text}
-                fontSize={12}
-                position="insideTop"
-                offset={18}
-                dx={8}
-                dy={-6}
-                className="chart-threshold-label"
-              />
-            </ReferenceLine>
-          ))}
+          {hasProjectedNet && (
+            <Area
+              type="linear"
+              dataKey="netProjected"
+              name="累積額（手取り・予測）"
+              stroke={colors.dark.accent}
+              strokeWidth={2}
+              strokeDasharray="6 4"
+              strokeLinecap="round"
+              fill="url(#takeHomeGradientProjected)"
+              isAnimationActive={false}
+              connectNulls
+            />
+          )}
+          {markerElements}
         </AreaChart>
       </ResponsiveContainer>
     </div>

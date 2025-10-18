@@ -1,13 +1,13 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "incremental": true,
     "jsx": "preserve",
     "lib": [
       "DOM",
       "DOM.Iterable",
       "ES2022"
     ],
+    "moduleResolution": "Bundler",
     "allowJs": false,
     "baseUrl": ".",
     "paths": {
@@ -38,7 +38,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
