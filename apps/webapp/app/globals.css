@@ -29,3 +29,13 @@
     text-wrap: balance;
   }
 }
+
+@layer components {
+  .income-area-chart :is(.recharts-wrapper, .recharts-responsive-container) {
+    overflow: visible !important;
+  }
+
+  .income-area-chart .chart-threshold-label {
+    text-anchor: start;
+  }
+}

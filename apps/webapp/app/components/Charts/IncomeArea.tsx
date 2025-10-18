@@ -2,6 +2,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Label,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -19,6 +20,7 @@ export interface IncomeAreaProps {
 }
 
 const THRESHOLDS: Array<{ id: string; value: number; label: string }> = [
+  { id: "SOCIAL_106", value: 1_060_000, label: "社保加入（特定適用）106万円" },
   { id: "RESIDENT_110", value: 1_100_000, label: "住民税 110万円" },
   { id: "TAX_FUYOU_123", value: 1_230_000, label: "扶養控除 123万円" },
   { id: "SOCIAL_130", value: 1_300_000, label: "社会保険 130万円" },
@@ -108,9 +110,9 @@ export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedTh
   });
 
   return (
-    <div className="h-[400px] md:h-[650px]">
+    <div className="income-area-chart h-[400px] md:h-[650px]">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={combinedData} margin={{ top: 20, right: 24, left: 0, bottom: 8 }}>
+        <AreaChart data={combinedData} margin={{ top: 48, right: 56, left: 16, bottom: 24 }}>
           <defs>
             <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={colors.primary[400]} stopOpacity={0.8} />
@@ -160,14 +162,18 @@ export default function IncomeArea({ data, annualTotal, takeHomeTotal, reachedTh
               x={marker.month}
               stroke={colors.sankey.text}
               strokeDasharray="4 4"
-              label={{
-                value: marker.label,
-                position: "top",
-                fill: colors.sankey.text,
-                fontSize: 12,
-                offset: 10
-              }}
-            />
+            >
+              <Label
+                value={marker.label}
+                fill={colors.sankey.text}
+                fontSize={12}
+                position="insideTop"
+                offset={18}
+                dx={8}
+                dy={-6}
+                className="chart-threshold-label"
+              />
+            </ReferenceLine>
           ))}
         </AreaChart>
       </ResponsiveContainer>
